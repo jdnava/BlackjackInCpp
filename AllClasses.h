@@ -74,6 +74,10 @@ public:
     
     Table* getTablePtr(){ return tablePtr; }
     void setTablePtr(Table* table){ tablePtr = table; }
+    
+    void displayPerson(){
+        cout << pName<< " " << totalMoney << endl;
+    }
     // END Methods ---------------
 };
 // END Person Class ======================================================================
@@ -266,9 +270,9 @@ public:
                 // out put hand info
                 for (auto card:humanArray[i].handVector){
                     if (card.show == false){
-                        cout << " ********* " <<   card.cardName << " " <<
+                        cout << " HIDDEN CARD " <<   card.cardName << " " <<
                         card.cardSuit << " " <<
-                        card.cardValue << " ********* " << endl;
+                        card.cardValue << " HIDDEN CARD " << endl;
                     }else{
                         cout << " cardname  " << card.cardName << " " <<
                         " cardsuit  " << card.cardSuit << " " <<
@@ -282,8 +286,9 @@ public:
     
     //	SHOE TESTING ONLY
     void displayShoe(){
+        cout << "Current Shoe, the next card out will be: " << tableShoe.back() << endl;
         for (auto card:tableShoe){cout << card << " ";}
-        cout << endl << "Number of Cards left " << tableShoe.size() << endl;
+        cout << endl << "Number of Cards left in shoe: " << tableShoe.size() << endl;
     }
     
     //	CARD TRANSLATOR TESTING
@@ -390,6 +395,7 @@ void Dealer::startDeal(){
     int conditionPush;
     
     //	burn Card
+    cout << "Dealer burns first card." << endl << endl;
     this->getTablePtr()->getShoeCard();
     
     //	Check for bets
@@ -397,7 +403,7 @@ void Dealer::startDeal(){
     // the playing hand to add a bet to there bet variable on the table. once dealer has
     // finished dealing, taking losses and applying wins, players will get a few seconds
     // to place next bet.
-    cout << "Dealer Says \" place your bets\"" << endl;
+    cout << "Dealer Says: \"Place your bets!\"" << endl;
     
     //	counts valid players
     int count = 7;
@@ -429,6 +435,8 @@ void Dealer::startDeal(){
         }
     }
     
+    cout << "Dealer deals 1 card to players." << endl << endl;
+    
     //	1 round of dealing 1 card face up ending with the dealer card face down
     for (int i = 0; i <= 7; i++){
         if (!isPlayerPlaying[i]){ //skip person
@@ -439,9 +447,15 @@ void Dealer::startDeal(){
             }
         }
     }
+    
+    cout << "Dealer deals 1 more card to players." << endl << endl;
+
+    
+    
     //set current hand value
     
-    
+    cout << "Dealer \"nopeeks\" for 21, if 10 showing in dealers hand." << endl << endl;
+
     //	if dealer up card is 10, dealer "nopeek" for blackjack, if blackjack hand over.
     //		note if blackjacks are push
     if (this->getTablePtr()->getCardValue(0, 0) == 10 && this->getTablePtr()->getCardValue(0, 1) == 1){
@@ -457,18 +471,26 @@ void Dealer::startDeal(){
         }
     }
     
+    cout << "Functunallity still to add..." <<endl;
+    
+    cout << LPAD << "Dealer offers insurance to players, if Ace showing." << endl;
     //	if dealer up card is ace, insurance is asked for, side bet that dealer had a blackjack,
     //      if blackjack hand over. note if blackjacks are push
     
+    cout << LPAD << "Dealer starts hand if no 21 in dealer's hand." << endl;
     //	if no blackjack for dealer, dealer moves to first player, and around the table. left player?
     //		each player can hit, stand, double down, sometimes split.
     
+    cout << LPAD << "After all players have played their hand. Dealer plays." << endl;
     //	dealer revels face down card and follows house rules(stand on 17, hit soft 17, ect...).
     
+    cout << LPAD << "Dealer collects losses and rewards wins, leaves pushes." << endl;
     //	collects losses, leaves pushes, assigns wins.
     
+    cout << LPAD << "Dealer collects cards and re-deals or shuffles if needed." << endl;
     //	clears cards, suffles if shuffle card comes up
     
+    cout << "...end" << endl << endl;
 }
 
 

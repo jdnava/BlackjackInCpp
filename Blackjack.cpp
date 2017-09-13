@@ -7,6 +7,7 @@
 //  Copyright © 2017 JD. All rights reserved.
 //
 //----------------------------------------------------------------------------------------
+
 // library calls and syntax/output formating
 #include <iostream>
 #include <array>
@@ -26,12 +27,6 @@
 
 using namespace std;
 
-
-//START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN
-//START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN
-//START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN
-//START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN
-//START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN
 //START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN
 //START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN
 //START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN START MAIN
@@ -48,16 +43,16 @@ int main() {
 	int const NUMOFDEALERS = 10;
 	Table* casinoDealterArray[NUMOFTABLES];
 	
-//	CasinoPlayerVector
-//	int const NUMOFTABLES = 10;
-	vector<Table*> casinoPlayerVector;
+////	CasinoPlayerVector
+////	int const NUMOFTABLES = 10;
+//	vector<Table*> casinoPlayerVector;
 
 //	PERSON TESTING - these objects and info will be created by users
 	//creation
 //	cout << "PERSON TESTING" << endl;
 	Person person1 ("Theon", 1000);
 	
-	Dealer dealer1 ("Tyrion", 2000, 3);
+	Dealer dealer1 ("Tyrion", 2000, 2);
 	
 	Player player1 ("Gilly", 3000);
 	player1.setplayerBetForWin(1);
@@ -152,24 +147,22 @@ int main() {
 	
 	//displays Shoe
 	casinoTablesArray[0]->displayShoe();
-	cout << endl;
+	cout << "--------------" << endl << endl;
 	
 	//displays Table
 	casinoTablesArray[0]->tableDisplay();
-	cout << endl;
+	cout << "--------------" << endl << endl;
 
 //	DEAL TESTING
 	dealer1.startDeal();
-	cout << endl;
+	cout << "--------------" << endl << endl;
 
 	casinoTablesArray[0]->tableDisplay();
-	cout << endl;
+	cout << "--------------" << endl << endl;
 
 	casinoTablesArray[0]->displayShoe();
-	cout << endl;
+	cout << "--------------" << endl << endl;
 	
-
-
 	
 ////  SHOE TESTING in table
 //	cout << "SHOE TESTING in table" << endl;

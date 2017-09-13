@@ -102,7 +102,8 @@ private:
     
 public:
     // Constructors ---------------
-    Dealer() : Person(), numbOfDecks(1){}
+    Dealer() : Person("random", 99), numbOfDecks(1){}
+    Dealer(string name, int money) : Person(name, money), numbOfDecks(1){}
     Dealer(string name, int money, int decks) : Person(name, money), numbOfDecks(decks){}
     // END Constructors ---------------
     
@@ -165,6 +166,7 @@ private:
     float houseBank=9999999;
     
     // Table Rules
+    int numbOfDecksTR = 6;
     float tableMinBet = 1;
     float tableMaxBet = 50;
     float blackjackPayout = 2.5;// 2.5 is 3:2 win this is added to
@@ -256,27 +258,32 @@ public:
     void tableDisplay(){
         //display
         cout << "Table Min Bet: " << gettableMinBet() << endl;
-        cout << "Table Max Bet: " << gettableMaxBet() << endl;
+        cout << "Table Max Bet: " << gettableMaxBet() << endl << endl;
         for (int i=0; i<HARRAYSIZE; i++){
             if(humanArray[i].personPtr == nullptr){
                 // skip player
             }else{
                 //output person info
-                cout << "PersonName " << humanArray[i].personPtr->getName() << "   location " << i << endl;
-                cout << "TotalMoney " << humanArray[i].personPtr->getTotalMoney() << endl;
+                if(i==0){
+                    cout << "Dealer: " << humanArray[i].personPtr->getName() << endl;
+                }else{
+                    cout << "Player " << i << ":   "; humanArray[i].personPtr->displayPerson();
+                }
                 if (i == 0){//skip
-                }else{cout << "bet        " << humanArray[i].bet << endl;}
+                }else{cout << "bet:        " << humanArray[i].bet << endl;}
                 
-                // out put hand info
+                // output hand info
                 for (auto card:humanArray[i].handVector){
                     if (card.show == false){
-                        cout << " HIDDEN CARD " <<   card.cardName << " " <<
-                        card.cardSuit << " " <<
-                        card.cardValue << " HIDDEN CARD " << endl;
+                        cout << LTAB <<
+                        "*HIDDEN*  " <<  setw(16) << left << card.cardName <<
+                        " " << setw(20) << card.cardSuit <<
+                        " " << card.cardValue << "  *HIDDEN*" << endl;
                     }else{
-                        cout << " cardname  " << card.cardName << " " <<
-                        " cardsuit  " << card.cardSuit << " " <<
-                        " cardvalue " << card.cardValue << endl;
+                        cout << LTAB <<
+                        "cardname: " << setw(7) << left << card.cardName <<
+                        "cardsuit: " << setw(10) << card.cardSuit <<
+                        "cardvalue: " << card.cardValue << endl;
                     }
                 }
                 cout << endl;
@@ -286,7 +293,7 @@ public:
     
     //	SHOE TESTING ONLY
     void displayShoe(){
-        cout << "Current Shoe, the next card out will be: " << tableShoe.back() << endl;
+        cout << "Current Shoe, the next card out will be: " << tableShoe.back() << " (Cards are serialized)" << endl;
         for (auto card:tableShoe){cout << card << " ";}
         cout << endl << "Number of Cards left in shoe: " << tableShoe.size() << endl;
     }
@@ -317,10 +324,10 @@ public:
                 }else {										csuit = "Diamonds ";}
                 
                 switch (cNameValueMod) { //assigns value and name to cards
-                    case  1:  cvalue =  1; cname = "Ace   "; break;
-                    case 11:  cvalue = 10; cname = "Jack  "; break;
-                    case 12:  cvalue = 10; cname = "Queen "; break;
-                    case  0:  cvalue = 10; cname = "King  "; break;
+                    case  1:  cvalue =  1; cname = "Ace"; break;
+                    case 11:  cvalue = 10; cname = "Jack"; break;
+                    case 12:  cvalue = 10; cname = "Queen"; break;
+                    case  0:  cvalue = 10; cname = "King"; break;
                     default:  cvalue = cNameValueMod;
                         cname = to_string(cNameValueMod); break;
                 }
@@ -385,7 +392,7 @@ public:
 // END Table Class =======================================================================
 
 void Dealer::startDeal(){
-    cout<<"now in startdeal" << endl;
+//    cout<<"now in startdeal" << endl;
     
     //array for checking if bets are out for players to play hand
     array<bool, 7> isPlayerPlaying;
@@ -403,7 +410,7 @@ void Dealer::startDeal(){
     // the playing hand to add a bet to there bet variable on the table. once dealer has
     // finished dealing, taking losses and applying wins, players will get a few seconds
     // to place next bet.
-    cout << "Dealer Says: \"Place your bets!\"" << endl;
+    cout << "Dealer: \"Place your bets!\"" << endl << endl;
     
     //	counts valid players
     int count = 7;
@@ -413,12 +420,12 @@ void Dealer::startDeal(){
         if (this->getTablePtr()->getPlayerTableBet(p) == 0){
             countSkippedPlayers++;
         }else if(this->getTablePtr()->getPlayerTableBet(p) < this->getTablePtr()->gettableMinBet()){
-            cout << endl << "Dealer: \"I\'m sorry player " << p << " your bet is below the table minimum.\""
-            << endl << "\"Please increase your bet to play the next hand.\"" << endl;
+            cout << "Dealer: \"I\'m sorry player " << p << " your bet is below the table minimum.\""
+            << endl << LTAB << LTAB << "\"Please increase your bet to play the next hand.\"" << endl << endl;
             countSkippedPlayers++;
         }else if(this->getTablePtr()->getPlayerTableBet(p) > this->getTablePtr()->gettableMaxBet()){
-            cout << endl << "Dealer: \"I\'m sorry " << p << " your bet is above the table maximum.\""
-            << endl << "\"Please decrease your bet to play the next hand.\"" << endl;
+            cout<< "Dealer: \"I\'m sorry player " << p << " your bet is above the table maximum.\""
+            << endl << LTAB << LTAB << "\"Please decrease your bet to play the next hand.\"" << endl << endl;
             countSkippedPlayers++;
         }else if(this->getTablePtr()->getPersonPtr(p) == nullptr){//skip player
             countSkippedPlayers++;
@@ -472,6 +479,8 @@ void Dealer::startDeal(){
     }
     
     cout << "Functunallity still to add..." <<endl;
+    
+    cout << LPAD << "Dealer ends round if \"nopeek\" shows 21." << endl;
     
     cout << LPAD << "Dealer offers insurance to players, if Ace showing." << endl;
     //	if dealer up card is ace, insurance is asked for, side bet that dealer had a blackjack,
